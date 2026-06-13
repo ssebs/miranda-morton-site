@@ -8,10 +8,10 @@ keyInsights:
   - "Three primary axes extend from the rotunda — dining/kitchen, living room, and bedrooms."
   - "\"Stacked geometry\" — an octagonal cupola over a square widow's walk — reinforces hierarchy."
   - "Documented in AutoCAD, modeled in Revit, rendered in Twinmotion."
-coverImage: "/img/projects/placeholder-2.svg"
+coverImage: "../../assets/projects/placeholder-2.svg"
 gallery:
-  - "/img/projects/placeholder-2.svg"
-  - "/img/projects/placeholder-3.svg"
+  - "../../assets/projects/placeholder-2.svg"
+  - "../../assets/projects/placeholder-3.svg"
 fullDocsPdf: "/pdfs/placeholder-project.pdf"
 ---
 

@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 560" role="img" aria-label="Portrait placeholder">
+  <rect width="520" height="560" fill="#4f518c"/>
+  <circle cx="260" cy="210" r="100" fill="#dabfff" opacity="0.75"/>
+  <path d="M120 500 C120 370 400 370 400 500 Z" fill="#dabfff" opacity="0.75"/>
+  <text x="260" y="535" font-family="system-ui, sans-serif" font-size="20" fill="#2c2a4a" text-anchor="middle">Second photo of you</text>
+</svg>

@@ -8,9 +8,9 @@ keyInsights:
   - "Drawn at 1/8\", ¼\", and ½\" scales to show both whole systems and detailed junctions."
   - "Demonstrates material transitions, moisture-control strategies, and attachment methods."
   - "Emphasizes line-weight hierarchy, material hatching, and precise annotation — all drawn by hand."
-coverImage: "/img/projects/placeholder-1.svg"
+coverImage: "../../assets/projects/placeholder-1.svg"
 gallery:
-  - "/img/projects/placeholder-1.svg"
+  - "../../assets/projects/placeholder-1.svg"
 fullDocsPdf: "/pdfs/placeholder-project.pdf"
 ---
 

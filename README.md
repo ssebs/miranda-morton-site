@@ -8,6 +8,7 @@ https://coolors.co/palette/dabfff-907ad6-4f518c-2c2a4a-7fdeff
 - add images
 - add content / replace all text
 - add section for letters of recommendation
+- remove experience section from about, show resume earlier
 
 ## Structure:
 - Home page `/`

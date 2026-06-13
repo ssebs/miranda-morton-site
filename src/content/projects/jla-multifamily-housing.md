@@ -7,7 +7,7 @@ keyInsights:
   - "Produced coordinated drawing sets across architectural, structural, and MEP disciplines."
   - "Supported affordable-housing projects from schematic design through construction documents."
   - "Worked within Revit to maintain accurate, build-ready documentation."
-coverImage: "/img/projects/placeholder-1.svg"
+coverImage: "../../assets/projects/placeholder-1.svg"
 gallery: []
 confidential: true
 ---

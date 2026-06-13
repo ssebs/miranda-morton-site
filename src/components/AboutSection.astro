@@ -1,21 +1,25 @@
 ---
+import { Image } from "astro:assets";
+import type { ImageMetadata } from "astro";
+import { withBase } from "../lib/withBase";
+import aboutImage from "../assets/miranda-about.svg";
 interface Props {
   /** "compact" for the home-page teaser, "full" for the About page. */
   variant?: "compact" | "full";
-  image?: string;
+  image?: ImageMetadata;
   showResumeCta?: boolean;
 }
 
 const {
   variant = "compact",
-  image = "/img/miranda-about.svg",
+  image = aboutImage,
   showResumeCta = true,
 } = Astro.props;
 ---
 
 <div class:list={["about", `about--${variant}`]}>
   <div class="about__media">
-    <img src={image} alt="Miranda Morton" loading="lazy" />
+    <Image src={image} alt="Miranda Morton" loading="lazy" />
   </div>
   <div class="about__text">
     <p class="eyebrow">About</p>
@@ -40,7 +44,7 @@ const {
     {
       showResumeCta && (
         <div class="about__ctas">
-          <a href="/about" class="btn btn--primary">
+          <a href={withBase("/about")} class="btn btn--primary">
             Download Resume
           </a>
         </div>

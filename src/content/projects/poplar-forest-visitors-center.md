@@ -8,10 +8,10 @@ keyInsights:
   - "Frosted glass floor panels filter skylight down while preserving privacy."
   - "Site strategy separates vehicle and bus drop-off, with hedge gardens, a reflecting pool, and a grand Ionic portico."
   - "Drawn from classical and Jeffersonian principles; documented in AutoCAD, Revit, and Twinmotion to DD level."
-coverImage: "/img/projects/placeholder-3.svg"
+coverImage: "../../assets/projects/placeholder-3.svg"
 gallery:
-  - "/img/projects/placeholder-3.svg"
-  - "/img/projects/placeholder-1.svg"
+  - "../../assets/projects/placeholder-3.svg"
+  - "../../assets/projects/placeholder-1.svg"
 fullDocsPdf: "/pdfs/placeholder-project.pdf"
 ---
 

@@ -1,4 +1,5 @@
 ---
+import { withBase } from "../lib/withBase";
 const links = [
   { href: "/", label: "Home" },
   { href: "/portfolio", label: "Portfolio" },
@@ -6,12 +7,13 @@ const links = [
   { href: "/about", label: "About" },
   { href: "/contact", label: "Contact" },
 ];
-const path = Astro.url.pathname.replace(/\/$/, "") || "/";
+const strip = (p: string) => p.replace(/\/$/, "") || "/";
+const path = strip(Astro.url.pathname);
 ---
 
 <header class="site-nav">
   <div class="container site-nav__inner">
-    <a href="/" class="site-nav__brand">
+    <a href={withBase("/")} class="site-nav__brand">
       <span class="site-nav__mark">MM</span>
       <span class="site-nav__name">Miranda&nbsp;Morton</span>
     </a>
@@ -25,8 +27,8 @@ const path = Astro.url.pathname.replace(/\/$/, "") || "/";
       {
         links.map((l) => (
           <a
-            href={l.href}
-            class:list={["site-nav__link", { "is-active": path === l.href }]}
+            href={withBase(l.href)}
+            class:list={["site-nav__link", { "is-active": path === strip(withBase(l.href)) }]}
           >
             {l.label}
           </a>

@@ -5,6 +5,7 @@ import Hero from "../components/Hero.astro";
 import ProjectGrid from "../components/ProjectGrid.astro";
 import AboutSection from "../components/AboutSection.astro";
 import ContactForm from "../components/ContactForm.astro";
+import { withBase } from "../lib/withBase";
 
 const projects = await getCollection("projects");
 ---
@@ -24,7 +25,7 @@ const projects = await getCollection("projects");
         <ProjectGrid projects={projects} split={true} limit={2} />
       </div>
       <div class="work__cta">
-        <a href="/projects" class="btn btn--primary">View all projects</a>
+        <a href={withBase("/projects")} class="btn btn--primary">View all projects</a>
       </div>
     </div>
   </section>

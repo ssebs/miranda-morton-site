@@ -1,6 +1,8 @@
 ---
 import { getCollection, render } from "astro:content";
 import Layout from "../../layouts/Layout.astro";
+import { Image } from "astro:assets";
+import { withBase } from "../../lib/withBase";
 
 export async function getStaticPaths() {
   const projects = await getCollection("projects");
@@ -20,14 +22,14 @@ const { Content } = await render(project);
   <article class="project">
     <header class="project__hero">
       <div class="container">
-        <a href="/projects" class="project__back">← All projects</a>
+        <a href={withBase("/projects")} class="project__back">← All projects</a>
         <h1>{title}</h1>
         <p class="lede">{summary}</p>
       </div>
     </header>
 
     <div class="project__cover container">
-      <img src={coverImage} alt={title} />
+      <Image src={coverImage} alt={title} />
     </div>
 
     <div class="container project__body">
@@ -53,7 +55,7 @@ const { Content } = await render(project);
       gallery.length > 0 && (
         <div class="container project__gallery">
           {gallery.map((src) => (
-            <img src={src} alt={`${title} — gallery image`} loading="lazy" />
+            <Image src={src} alt={`${title} — gallery image`} loading="lazy" />
           ))}
         </div>
       )
@@ -68,7 +70,7 @@ const { Content } = await render(project);
             detail on request.
           </p>
         ) : fullDocsPdf ? (
-          <a href={fullDocsPdf} target="_blank" rel="noopener" class="btn btn--primary">
+          <a href={withBase(fullDocsPdf)} target="_blank" rel="noopener" class="btn btn--primary">
             View Full Documentation (PDF)
           </a>
         ) : null

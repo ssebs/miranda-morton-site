@@ -1,4 +1,5 @@
 ---
+import { withBase } from "../lib/withBase";
 interface Props {
   src: string;
   title?: string;
@@ -8,11 +9,12 @@ interface Props {
 }
 
 const {
-  src,
+  src: rawSrc,
   title = "Document",
   ratio = "wide",
   downloadLabel = "Download PDF",
 } = Astro.props;
+const src = withBase(rawSrc);
 ---
 
 <div class="pdf">

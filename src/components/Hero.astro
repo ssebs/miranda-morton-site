@@ -1,4 +1,8 @@
 ---
+import { Image } from "astro:assets";
+import type { ImageMetadata } from "astro";
+import { withBase } from "../lib/withBase";
+import portrait from "../assets/miranda-portrait.svg";
 interface Cta {
   href: string;
   label: string;
@@ -9,14 +13,14 @@ interface Cta {
 interface Props {
   name?: string;
   title?: string;
-  image?: string;
+  image?: ImageMetadata;
   ctas?: Cta[];
 }
 
 const {
   name = "Miranda Morton",
   title = "Architectural Designer & Drafter",
-  image = "/img/miranda-portrait.svg",
+  image = portrait,
   ctas = [
     { href: "/portfolio", label: "View Portfolio", style: "primary" },
     { href: "/about", label: "About & Resume", style: "ghost" },
@@ -47,7 +51,7 @@ const {
         {
           ctas.map((c) => (
             <a
-              href={c.href}
+              href={c.external ? c.href : withBase(c.href)}
               class:list={[
                 "btn",
                 c.style === "ghost" ? "btn--ghost" : "btn--primary",
@@ -64,7 +68,7 @@ const {
     <div class="hero__media">
       <span class="hero__frame" aria-hidden="true"></span>
       <span class="hero__accent" aria-hidden="true"></span>
-      <img src={image} alt={`Portrait of ${name}`} width="520" height="640" />
+      <Image src={image} alt={`Portrait of ${name}`} width={520} height={640} />
     </div>
   </div>
 </section>
