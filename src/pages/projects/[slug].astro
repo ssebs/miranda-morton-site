@@ -1,0 +1,166 @@
+---
+import { getCollection, render } from "astro:content";
+import Layout from "../../layouts/Layout.astro";
+
+export async function getStaticPaths() {
+  const projects = await getCollection("projects");
+  return projects.map((project) => ({
+    params: { slug: project.id },
+    props: { project },
+  }));
+}
+
+const { project } = Astro.props;
+const { title, summary, keyInsights, coverImage, gallery, fullDocsPdf, confidential } =
+  project.data;
+const { Content } = await render(project);
+---
+
+<Layout title={`${title} — Miranda Morton`} description={summary}>
+  <article class="project">
+    <header class="project__hero">
+      <div class="container">
+        <a href="/projects" class="project__back">← All projects</a>
+        <h1>{title}</h1>
+        <p class="lede">{summary}</p>
+      </div>
+    </header>
+
+    <div class="project__cover container">
+      <img src={coverImage} alt={title} />
+    </div>
+
+    <div class="container project__body">
+      {
+        keyInsights.length > 0 && (
+          <aside class="project__insights">
+            <h2>Key insights</h2>
+            <ul>
+              {keyInsights.map((insight) => (
+                <li>{insight}</li>
+              ))}
+            </ul>
+          </aside>
+        )
+      }
+
+      <div class="project__prose">
+        <Content />
+      </div>
+    </div>
+
+    {
+      gallery.length > 0 && (
+        <div class="container project__gallery">
+          {gallery.map((src) => (
+            <img src={src} alt={`${title} — gallery image`} loading="lazy" />
+          ))}
+        </div>
+      )
+    }
+
+    <div class="container project__docs">
+      {
+        confidential ? (
+          <p class="project__confidential">
+            Full documentation for this project is not published here out of
+            respect for client confidentiality. I'm happy to discuss the work in
+            detail on request.
+          </p>
+        ) : fullDocsPdf ? (
+          <a href={fullDocsPdf} target="_blank" rel="noopener" class="btn btn--primary">
+            View Full Documentation (PDF)
+          </a>
+        ) : null
+      }
+    </div>
+  </article>
+</Layout>
+
+<style>
+  .project__hero {
+    background: var(--bg-alt);
+    border-bottom: 1px solid var(--border);
+    padding-block: clamp(2rem, 6vw, 4rem);
+  }
+  .project__back {
+    display: inline-block;
+    margin-bottom: 1rem;
+    font-weight: 600;
+    font-size: 0.92rem;
+  }
+  .project__cover {
+    margin-top: 2.5rem;
+  }
+  .project__cover img {
+    width: 100%;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+  }
+  .project__body {
+    display: grid;
+    grid-template-columns: 0.9fr 1.6fr;
+    gap: clamp(2rem, 5vw, 4rem);
+    margin-block: clamp(2.5rem, 6vw, 4rem);
+  }
+  .project__insights {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    align-self: start;
+    position: sticky;
+    top: 84px;
+  }
+  .project__insights h2 {
+    font-size: 1.15rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-family: var(--font-sans);
+    color: var(--accent-strong);
+  }
+  .project__insights ul {
+    margin: 0;
+    padding-left: 1.1rem;
+    color: var(--text-muted);
+  }
+  .project__insights li {
+    margin-bottom: 0.6rem;
+  }
+  .project__prose :global(p) {
+    font-size: 1.05rem;
+  }
+  .project__gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--gap);
+    margin-bottom: clamp(2.5rem, 6vw, 4rem);
+  }
+  .project__gallery img {
+    width: 100%;
+    border-radius: var(--radius);
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+  }
+  .project__docs {
+    margin-bottom: clamp(3rem, 8vw, 5rem);
+  }
+  .project__confidential {
+    background: var(--bg-alt);
+    border-left: 3px solid var(--accent);
+    padding: 1.25rem 1.5rem;
+    border-radius: var(--radius);
+    color: var(--text-muted);
+    max-width: 70ch;
+  }
+  @media (max-width: 820px) {
+    .project__body {
+      grid-template-columns: 1fr;
+    }
+    .project__insights {
+      position: static;
+    }
+  }
+</style>

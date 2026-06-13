@@ -1,0 +1,146 @@
+/* Miranda Morton — global styles
+   Palette: https://coolors.co/palette/dabfff-907ad6-4f518c-2c2a4a-7fdeff */
+
+:root {
+  --lavender: #dabfff;
+  --purple: #907ad6;
+  --indigo: #4f518c;
+  --navy: #2c2a4a;
+  --cyan: #7fdeff;
+
+  /* Semantic tokens (light, architectural theme) */
+  --bg: #ffffff;
+  --bg-alt: #f6f4fb; /* faint lavender tint */
+  --bg-dark: var(--navy);
+  --text: var(--navy);
+  --text-muted: #5b5a78;
+  --accent: var(--purple);
+  --accent-strong: var(--indigo);
+  --highlight: var(--cyan);
+  --border: #e7e3f2;
+
+  --maxw: 1180px;
+  --gap: 1.5rem;
+  --radius: 10px;
+  --shadow: 0 6px 24px rgba(44, 42, 74, 0.08);
+
+  --font-sans: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-serif: "Cormorant Garamond", Georgia, "Times New Roman", serif;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  color: var(--text);
+  background: var(--bg);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-serif);
+  line-height: 1.1;
+  color: var(--navy);
+  font-weight: 600;
+  margin: 0 0 0.5em;
+}
+
+h1 {
+  font-size: clamp(2.4rem, 6vw, 4rem);
+}
+h2 {
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
+}
+h3 {
+  font-size: 1.35rem;
+}
+
+a {
+  color: var(--accent-strong);
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+a:hover {
+  color: var(--accent);
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+.container {
+  width: 100%;
+  max-width: var(--maxw);
+  margin-inline: auto;
+  padding-inline: 1.25rem;
+}
+
+.section {
+  padding-block: clamp(3rem, 8vw, 6rem);
+}
+.section--alt {
+  background: var(--bg-alt);
+}
+
+.eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--accent);
+  font-family: var(--font-sans);
+  margin: 0 0 0.75rem;
+}
+
+/* Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.7rem 1.4rem;
+  border-radius: var(--radius);
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: transform 0.12s ease, background 0.15s ease, color 0.15s ease;
+}
+.btn:hover {
+  transform: translateY(-2px);
+}
+.btn--primary {
+  background: var(--accent-strong);
+  color: #fff;
+}
+.btn--primary:hover {
+  background: var(--accent);
+  color: #fff;
+}
+.btn--ghost {
+  background: transparent;
+  border-color: var(--border);
+  color: var(--navy);
+}
+.btn--ghost:hover {
+  border-color: var(--accent);
+  color: var(--accent-strong);
+}
+
+.lede {
+  font-size: 1.15rem;
+  color: var(--text-muted);
+  max-width: 60ch;
+}

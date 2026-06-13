@@ -1,0 +1,78 @@
+---
+interface Props {
+  /** "compact" for the home-page teaser, "full" for the About page. */
+  variant?: "compact" | "full";
+  image?: string;
+  showResumeCta?: boolean;
+}
+
+const {
+  variant = "compact",
+  image = "/img/miranda-about.svg",
+  showResumeCta = true,
+} = Astro.props;
+---
+
+<div class:list={["about", `about--${variant}`]}>
+  <div class="about__media">
+    <img src={image} alt="Miranda Morton" loading="lazy" />
+  </div>
+  <div class="about__text">
+    <p class="eyebrow">My Journey</p>
+    <h2>Designing with proportion, clarity, and craft</h2>
+    <p>
+      Miranda Morton is an architectural designer and drafter with a master's
+      degree in architecture and hands-on experience in multifamily and
+      affordable housing. Her work balances contemporary methods with traditional
+      influences, always in service of spaces that feel considered and humane.
+    </p>
+    {
+      variant === "full" && (
+        <p>
+          Replace this with the longer bio — her path into architecture, what she
+          cares about in design, and where she's headed next. Pull the strongest
+          lines from her resume and let her voice come through.
+        </p>
+      )
+    }
+    {
+      showResumeCta && (
+        <div class="about__ctas">
+          <a href="/about" class="btn btn--primary">
+            Download Resume
+          </a>
+        </div>
+      )
+    }
+  </div>
+</div>
+
+<style>
+  .about {
+    display: grid;
+    grid-template-columns: 0.8fr 1.2fr;
+    gap: clamp(2rem, 5vw, 3.5rem);
+    align-items: center;
+  }
+  .about__media img {
+    width: 100%;
+    height: auto;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    object-fit: cover;
+  }
+  .about__text h2 {
+    margin-top: 0.25rem;
+  }
+  .about__ctas {
+    margin-top: 1.5rem;
+  }
+  @media (max-width: 760px) {
+    .about {
+      grid-template-columns: 1fr;
+    }
+    .about__media {
+      max-width: 320px;
+    }
+  }
+</style>

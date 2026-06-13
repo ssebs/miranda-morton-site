@@ -1,0 +1,120 @@
+---
+const links = [
+  { href: "/", label: "Home" },
+  { href: "/portfolio", label: "Portfolio" },
+  { href: "/projects", label: "Projects" },
+  { href: "/about", label: "About" },
+  { href: "/contact", label: "Contact" },
+];
+const path = Astro.url.pathname.replace(/\/$/, "") || "/";
+---
+
+<header class="site-nav">
+  <div class="container site-nav__inner">
+    <a href="/" class="site-nav__brand">Miranda&nbsp;Morton</a>
+
+    <input type="checkbox" id="nav-toggle" class="site-nav__checkbox" />
+    <label for="nav-toggle" class="site-nav__burger" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </label>
+
+    <nav class="site-nav__links">
+      {
+        links.map((l) => (
+          <a
+            href={l.href}
+            class:list={["site-nav__link", { "is-active": path === l.href }]}
+          >
+            {l.label}
+          </a>
+        ))
+      }
+    </nav>
+  </div>
+</header>
+
+<style>
+  .site-nav {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--border);
+  }
+  .site-nav__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 64px;
+  }
+  .site-nav__brand {
+    font-family: var(--font-serif);
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: var(--navy);
+    letter-spacing: 0.02em;
+  }
+  .site-nav__links {
+    display: flex;
+    gap: 1.75rem;
+  }
+  .site-nav__link {
+    color: var(--text);
+    font-weight: 500;
+    font-size: 0.98rem;
+    padding-block: 0.25rem;
+    border-bottom: 2px solid transparent;
+  }
+  .site-nav__link:hover {
+    color: var(--accent-strong);
+  }
+  .site-nav__link.is-active {
+    color: var(--accent-strong);
+    border-bottom-color: var(--accent);
+  }
+
+  /* Mobile */
+  .site-nav__checkbox,
+  .site-nav__burger {
+    display: none;
+  }
+  .site-nav__burger {
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+    padding: 6px;
+  }
+  .site-nav__burger span {
+    width: 24px;
+    height: 2px;
+    background: var(--navy);
+    border-radius: 2px;
+  }
+
+  @media (max-width: 720px) {
+    .site-nav__burger {
+      display: flex;
+    }
+    .site-nav__links {
+      position: absolute;
+      top: 64px;
+      left: 0;
+      right: 0;
+      flex-direction: column;
+      gap: 0;
+      background: #fff;
+      border-bottom: 1px solid var(--border);
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.25s ease;
+    }
+    .site-nav__link {
+      padding: 0.9rem 1.25rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .site-nav__checkbox:checked ~ .site-nav__links {
+      max-height: 320px;
+    }
+  }
+</style>

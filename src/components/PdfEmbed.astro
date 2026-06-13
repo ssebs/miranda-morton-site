@@ -1,0 +1,59 @@
+---
+interface Props {
+  src: string;
+  title?: string;
+  /** "wide" for landscape portfolio, "page" for portrait resume. */
+  ratio?: "wide" | "page";
+  downloadLabel?: string;
+}
+
+const {
+  src,
+  title = "Document",
+  ratio = "wide",
+  downloadLabel = "Download PDF",
+} = Astro.props;
+---
+
+<div class="pdf">
+  <div class:list={["pdf__frame", `pdf__frame--${ratio}`]}>
+    <iframe src={`${src}#toolbar=1`} title={title} loading="lazy"></iframe>
+  </div>
+  <div class="pdf__actions">
+    <a href={src} target="_blank" rel="noopener" class="btn btn--ghost">
+      Open in new tab
+    </a>
+    <a href={src} download class="btn btn--primary">{downloadLabel}</a>
+  </div>
+</div>
+
+<style>
+  .pdf__frame {
+    width: 100%;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    background: var(--bg-alt);
+    box-shadow: var(--shadow);
+  }
+  .pdf__frame--wide {
+    aspect-ratio: 16 / 9;
+  }
+  .pdf__frame--page {
+    aspect-ratio: 8.5 / 11;
+    max-width: 720px;
+    margin-inline: auto;
+  }
+  .pdf__frame iframe {
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+  .pdf__actions {
+    display: flex;
+    gap: 0.75rem;
+    justify-content: center;
+    margin-top: 1.25rem;
+    flex-wrap: wrap;
+  }
+</style>

@@ -2,6 +2,7 @@
 
 > Old site found at miranda-morton.com
 
+https://coolors.co/palette/dabfff-907ad6-4f518c-2c2a4a-7fdeff
 
 ## Structure:
 - Home page `/`

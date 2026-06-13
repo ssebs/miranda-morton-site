@@ -1,0 +1,30 @@
+---
+import { getCollection } from "astro:content";
+import Layout from "../../layouts/Layout.astro";
+import ProjectGrid from "../../components/ProjectGrid.astro";
+
+const projects = await getCollection("projects");
+---
+
+<Layout title="Projects — Miranda Morton">
+  <section class="section">
+    <div class="container">
+      <p class="eyebrow">Projects</p>
+      <h1>Full project list</h1>
+      <p class="lede">
+        Every project, with a short summary and key insights. Open any one for
+        the full write-up and documentation. Some professional work is shown
+        without full documentation out of respect for client confidentiality.
+      </p>
+      <div class="projects__grid">
+        <ProjectGrid projects={projects} split={false} />
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .projects__grid {
+    margin-top: 2.5rem;
+  }
+</style>

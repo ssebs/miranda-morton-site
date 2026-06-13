@@ -1,17 +1,63 @@
 ---
+import { getCollection } from "astro:content";
+import Layout from "../layouts/Layout.astro";
+import Hero from "../components/Hero.astro";
+import ProjectGrid from "../components/ProjectGrid.astro";
+import AboutSection from "../components/AboutSection.astro";
+import ContactForm from "../components/ContactForm.astro";
 
+const projects = await getCollection("projects");
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<Layout>
+  <Hero />
+
+  <section class="section" id="work">
+    <div class="container">
+      <p class="eyebrow">Selected Work</p>
+      <h2>Things I've designed</h2>
+      <p class="lede">
+        A mix of professional and academic projects, from multifamily housing to
+        studio explorations of proportion and craft.
+      </p>
+      <div class="work__grid">
+        <ProjectGrid projects={projects} split={true} />
+      </div>
+      <div class="work__cta">
+        <a href="/projects" class="btn btn--primary">View all projects</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--alt">
+    <div class="container">
+      <AboutSection variant="compact" />
+    </div>
+  </section>
+
+  <section class="section" id="contact">
+    <div class="container">
+      <p class="eyebrow">Get in Touch</p>
+      <h2>Contact me</h2>
+      <p class="lede">
+        Looking to hire or collaborate? Send a note and I'll get back to you.
+      </p>
+      <div class="home-contact">
+        <ContactForm />
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .work__grid {
+    margin-top: 2.5rem;
+  }
+  .work__cta {
+    margin-top: 2.5rem;
+    text-align: center;
+  }
+  .home-contact {
+    margin-top: 2rem;
+  }
+</style>

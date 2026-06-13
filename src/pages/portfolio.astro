@@ -1,0 +1,33 @@
+---
+import Layout from "../layouts/Layout.astro";
+import PdfEmbed from "../components/PdfEmbed.astro";
+
+const portfolioPdf = "/pdfs/miranda-morton-portfolio.pdf";
+---
+
+<Layout title="Portfolio — Miranda Morton">
+  <section class="section">
+    <div class="container">
+      <p class="eyebrow">Portfolio</p>
+      <h1>Selected works</h1>
+      <p class="lede">
+        A curated portfolio of architectural design work. Browse it below, or
+        download the full document for the high-resolution version.
+      </p>
+      <div class="portfolio__doc">
+        <PdfEmbed
+          src={portfolioPdf}
+          title="Miranda Morton — Portfolio"
+          ratio="wide"
+          downloadLabel="Download Portfolio (PDF)"
+        />
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .portfolio__doc {
+    margin-top: 2.5rem;
+  }
+</style>

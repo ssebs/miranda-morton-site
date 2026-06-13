@@ -1,0 +1,64 @@
+---
+const year = new Date().getFullYear();
+const linkedin = "https://www.linkedin.com/in/miranda-morton-34b00230a/";
+const email = "mirandamorton7@yahoo.com";
+---
+
+<footer class="site-footer">
+  <div class="container site-footer__inner">
+    <div>
+      <p class="site-footer__name">Miranda Morton</p>
+      <p class="site-footer__tag">Architectural Designer &amp; Drafter</p>
+    </div>
+    <nav class="site-footer__links">
+      <a href={`mailto:${email}`}>Email</a>
+      <a href={linkedin} target="_blank" rel="noopener">LinkedIn</a>
+      <a href="/contact">Contact</a>
+    </nav>
+  </div>
+  <p class="site-footer__copy">© {year} Miranda Morton. All rights reserved.</p>
+</footer>
+
+<style>
+  .site-footer {
+    background: var(--bg-dark);
+    color: #cdcbe0;
+    padding: 3rem 0 1.5rem;
+    margin-top: 2rem;
+  }
+  .site-footer__inner {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .site-footer__name {
+    font-family: var(--font-serif);
+    font-size: 1.3rem;
+    color: #fff;
+    margin: 0;
+  }
+  .site-footer__tag {
+    margin: 0.15rem 0 0;
+    font-size: 0.9rem;
+    color: var(--lavender);
+  }
+  .site-footer__links {
+    display: flex;
+    gap: 1.5rem;
+  }
+  .site-footer__links a {
+    color: var(--lavender);
+    font-weight: 500;
+  }
+  .site-footer__links a:hover {
+    color: var(--cyan);
+  }
+  .site-footer__copy {
+    text-align: center;
+    margin: 2rem 0 0;
+    font-size: 0.82rem;
+    color: #7c7a98;
+  }
+</style>

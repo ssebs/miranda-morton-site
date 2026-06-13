@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" role="img" aria-label="Project placeholder">
+  <rect width="800" height="600" fill="#907ad6"/>
+  <rect x="60" y="60" width="680" height="480" fill="none" stroke="#2c2a4a" stroke-width="2" opacity="0.4"/>
+  <circle cx="400" cy="250" r="120" fill="#dabfff" opacity="0.5"/>
+  <path d="M120 480 L680 480 L680 360 L400 230 L120 360 Z" fill="#2c2a4a" opacity="0.45"/>
+  <text x="400" y="320" font-family="Georgia, serif" font-size="34" fill="#2c2a4a" text-anchor="middle">Project image</text>
+  <text x="400" y="360" font-family="system-ui, sans-serif" font-size="18" fill="#2c2a4a" text-anchor="middle" opacity="0.8">replace in /public/img/projects/</text>
+</svg>

@@ -1,0 +1,79 @@
+---
+import type { CollectionEntry } from "astro:content";
+import ProjectCard from "./ProjectCard.astro";
+
+interface Props {
+  projects: CollectionEntry<"projects">[];
+  /** When true, render labelled Professional / Academic columns. */
+  split?: boolean;
+}
+
+const { projects, split = false } = Astro.props;
+
+const professional = projects
+  .filter((p) => p.data.category === "professional")
+  .sort((a, b) => a.data.order - b.data.order);
+const academic = projects
+  .filter((p) => p.data.category === "academic")
+  .sort((a, b) => a.data.order - b.data.order);
+---
+
+{
+  split ? (
+    <div class="split">
+      <div class="split__col">
+        <h3 class="split__head">Professional Work</h3>
+        <div class="grid">
+          {professional.map((p) => (
+            <ProjectCard project={p} />
+          ))}
+        </div>
+      </div>
+      <div class="split__col">
+        <h3 class="split__head">Academic Work</h3>
+        <div class="grid">
+          {academic.map((p) => (
+            <ProjectCard project={p} />
+          ))}
+        </div>
+      </div>
+    </div>
+  ) : (
+    <div class="grid">
+      {[...professional, ...academic].map((p) => (
+        <ProjectCard project={p} />
+      ))}
+    </div>
+  )
+}
+
+<style>
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: var(--gap);
+  }
+  .split {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(1.5rem, 4vw, 3rem);
+  }
+  .split__head {
+    font-size: 1.1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--accent-strong);
+    font-family: var(--font-sans);
+    border-bottom: 2px solid var(--lavender);
+    padding-bottom: 0.5rem;
+    margin-bottom: 1.25rem;
+  }
+  .split .grid {
+    grid-template-columns: 1fr;
+  }
+  @media (max-width: 860px) {
+    .split {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
