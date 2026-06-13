@@ -6,16 +6,21 @@ interface Props {
   projects: CollectionEntry<"projects">[];
   /** When true, render labelled Professional / Academic columns. */
   split?: boolean;
+  /** Cap the number of projects shown per category. */
+  limit?: number;
 }
 
-const { projects, split = false } = Astro.props;
+const { projects, split = false, limit } = Astro.props;
 
-const professional = projects
-  .filter((p) => p.data.category === "professional")
-  .sort((a, b) => a.data.order - b.data.order);
-const academic = projects
-  .filter((p) => p.data.category === "academic")
-  .sort((a, b) => a.data.order - b.data.order);
+const byOrder = (cat: string) => {
+  const list = projects
+    .filter((p) => p.data.category === cat)
+    .sort((a, b) => a.data.order - b.data.order);
+  return limit ? list.slice(0, limit) : list;
+};
+
+const professional = byOrder("professional");
+const academic = byOrder("academic");
 ---
 
 {
@@ -69,10 +74,16 @@ const academic = projects
     margin-bottom: 1.25rem;
   }
   .split .grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
   }
   @media (max-width: 860px) {
     .split {
+      grid-template-columns: 1fr;
+    }
+  }
+  @media (max-width: 460px) {
+    .split .grid {
       grid-template-columns: 1fr;
     }
   }

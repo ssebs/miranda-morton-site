@@ -11,7 +11,10 @@ const path = Astro.url.pathname.replace(/\/$/, "") || "/";
 
 <header class="site-nav">
   <div class="container site-nav__inner">
-    <a href="/" class="site-nav__brand">Miranda&nbsp;Morton</a>
+    <a href="/" class="site-nav__brand">
+      <span class="site-nav__mark">MM</span>
+      <span class="site-nav__name">Miranda&nbsp;Morton</span>
+    </a>
 
     <input type="checkbox" id="nav-toggle" class="site-nav__checkbox" />
     <label for="nav-toggle" class="site-nav__burger" aria-label="Toggle menu">
@@ -38,21 +41,58 @@ const path = Astro.url.pathname.replace(/\/$/, "") || "/";
     position: sticky;
     top: 0;
     z-index: 50;
-    background: rgba(255, 255, 255, 0.85);
-    backdrop-filter: blur(8px);
+    background: rgba(255, 255, 255, 0.82);
+    backdrop-filter: blur(10px);
     border-bottom: 1px solid var(--border);
+  }
+  /* Gradient hairline along the very top */
+  .site-nav::before {
+    content: "";
+    position: absolute;
+    inset: 0 0 auto 0;
+    height: 3px;
+    background: linear-gradient(
+      90deg,
+      var(--lavender),
+      var(--purple),
+      var(--indigo),
+      var(--cyan)
+    );
   }
   .site-nav__inner {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    height: 64px;
+    height: 66px;
   }
   .site-nav__brand {
-    font-family: var(--font-serif);
-    font-size: 1.4rem;
-    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
     color: var(--navy);
+  }
+  .site-nav__mark {
+    display: grid;
+    place-items: center;
+    width: 34px;
+    height: 34px;
+    border-radius: 9px;
+    background: linear-gradient(135deg, var(--purple), var(--indigo));
+    color: #fff;
+    font-family: var(--font-serif);
+    font-weight: 700;
+    font-size: 0.95rem;
+    letter-spacing: 0.02em;
+    box-shadow: 0 4px 12px rgba(79, 81, 140, 0.32);
+    transition: transform 0.2s ease;
+  }
+  .site-nav__brand:hover .site-nav__mark {
+    transform: rotate(-6deg) scale(1.06);
+  }
+  .site-nav__name {
+    font-family: var(--font-serif);
+    font-size: 1.35rem;
+    font-weight: 600;
     letter-spacing: 0.02em;
   }
   .site-nav__links {
@@ -60,18 +100,36 @@ const path = Astro.url.pathname.replace(/\/$/, "") || "/";
     gap: 1.75rem;
   }
   .site-nav__link {
+    position: relative;
     color: var(--text);
     font-weight: 500;
     font-size: 0.98rem;
-    padding-block: 0.25rem;
-    border-bottom: 2px solid transparent;
+    padding-block: 0.3rem;
+  }
+  /* Sliding underline */
+  .site-nav__link::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 2px;
+    width: 100%;
+    background: linear-gradient(90deg, var(--purple), var(--cyan));
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
   }
   .site-nav__link:hover {
     color: var(--accent-strong);
   }
+  .site-nav__link:hover::after {
+    transform: scaleX(1);
+  }
   .site-nav__link.is-active {
     color: var(--accent-strong);
-    border-bottom-color: var(--accent);
+  }
+  .site-nav__link.is-active::after {
+    transform: scaleX(1);
   }
 
   /* Mobile */
@@ -98,7 +156,7 @@ const path = Astro.url.pathname.replace(/\/$/, "") || "/";
     }
     .site-nav__links {
       position: absolute;
-      top: 64px;
+      top: 66px;
       left: 0;
       right: 0;
       flex-direction: column;

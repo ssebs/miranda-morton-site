@@ -15,13 +15,13 @@ const projects = await getCollection("projects");
   <section class="section" id="work">
     <div class="container">
       <p class="eyebrow">Selected Work</p>
-      <h2>Things I've designed</h2>
+      <h2>Recent projects</h2>
       <p class="lede">
-        A mix of professional and academic projects, from multifamily housing to
-        studio explorations of proportion and craft.
+        Professional housing work at JLA Architects alongside graduate studio
+        projects in classical, civic, and residential design.
       </p>
       <div class="work__grid">
-        <ProjectGrid projects={projects} split={true} />
+        <ProjectGrid projects={projects} split={true} limit={2} />
       </div>
       <div class="work__cta">
         <a href="/projects" class="btn btn--primary">View all projects</a>
@@ -38,9 +38,9 @@ const projects = await getCollection("projects");
   <section class="section" id="contact">
     <div class="container">
       <p class="eyebrow">Get in Touch</p>
-      <h2>Contact me</h2>
+      <h2>Let's work together</h2>
       <p class="lede">
-        Looking to hire or collaborate? Send a note and I'll get back to you.
+        Hiring, or have a project in mind? Send a note and I'll reply soon.
       </p>
       <div class="home-contact">
         <ContactForm />
