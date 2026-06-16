@@ -2,6 +2,7 @@
 import { getCollection, render } from "astro:content";
 import Layout from "../../layouts/Layout.astro";
 import { Image } from "astro:assets";
+import PdfEmbed from "../../components/PdfEmbed.astro";
 import { withBase } from "../../lib/withBase";
 
 export async function getStaticPaths() {
@@ -70,9 +71,15 @@ const { Content } = await render(project);
             detail on request.
           </p>
         ) : fullDocsPdf ? (
-          <a href={withBase(fullDocsPdf)} target="_blank" rel="noopener" class="btn btn--primary">
-            View Full Documentation (PDF)
-          </a>
+          <div class="project__docs-embed">
+            <h2>Full documentation</h2>
+            <PdfEmbed
+              src={fullDocsPdf}
+              title={`${title} — full documentation`}
+              ratio="wide"
+              downloadLabel="Download Full Documentation (PDF)"
+            />
+          </div>
         ) : null
       }
     </div>
@@ -99,6 +106,7 @@ const { Content } = await render(project);
     border-radius: var(--radius);
     box-shadow: var(--shadow);
     aspect-ratio: 16 / 9;
+    max-height: 40vh;
     object-fit: cover;
   }
   .project__body {
@@ -144,6 +152,7 @@ const { Content } = await render(project);
     width: 100%;
     border-radius: var(--radius);
     aspect-ratio: 4 / 3;
+    max-height: 70vh;
     object-fit: cover;
   }
   .project__docs {

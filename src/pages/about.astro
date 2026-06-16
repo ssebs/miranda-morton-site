@@ -2,23 +2,21 @@
 import Layout from "../layouts/Layout.astro";
 import AboutSection from "../components/AboutSection.astro";
 import PdfEmbed from "../components/PdfEmbed.astro";
+import aboutPhoto from "../assets/miranda-3.jpg";
 
 const resumePdf = "/pdfs/miranda-morton-resume.pdf";
 const linkedin = "https://www.linkedin.com/in/miranda-morton-34b00230a/";
 
-// Update these as needed — pulled from the resume.
-const experience = [
+const letters = [
   {
-    role: "Architectural Designer & Drafter",
-    org: "JLA Architects",
-    dates: "2022 – Present",
-    note: "Design coordination and construction documentation for multifamily and affordable housing projects.",
+    title: "Letter of Recommendation",
+    from: "Erik Jansson",
+    href: "/pdfs/letter-jansson.pdf",
   },
   {
-    role: "Administrative Assistant",
-    org: "The Mulhern Group, Ltd.",
-    dates: "2025 – Present",
-    note: "Supporting day-to-day operations of an architecture practice.",
+    title: "Professional Reference",
+    from: "Janet Eibes",
+    href: "/pdfs/reference-eibes.pdf",
   },
 ];
 ---
@@ -28,27 +26,7 @@ const experience = [
     <div class="container">
       <p class="eyebrow">About</p>
       <h1>About Miranda</h1>
-      <AboutSection variant="full" showResumeCta={false} />
-    </div>
-  </section>
-
-  <section class="section section--alt">
-    <div class="container">
-      <h2>Experience</h2>
-      <ul class="exp">
-        {
-          experience.map((job) => (
-            <li class="exp__item">
-              <div class="exp__head">
-                <span class="exp__role">{job.role}</span>
-                <span class="exp__dates">{job.dates}</span>
-              </div>
-              <p class="exp__org">{job.org}</p>
-              <p class="exp__note">{job.note}</p>
-            </li>
-          ))
-        }
-      </ul>
+      <AboutSection variant="full" image={aboutPhoto} showResumeCta={false} />
       <p class="about__links">
         <a href={linkedin} target="_blank" rel="noopener" class="btn btn--ghost">
           View LinkedIn →
@@ -57,7 +35,7 @@ const experience = [
     </div>
   </section>
 
-  <section class="section">
+  <section class="section section--alt">
     <div class="container">
       <h2>Resume</h2>
       <p class="lede">Read it below or download a copy.</p>
@@ -71,53 +49,49 @@ const experience = [
       </div>
     </div>
   </section>
+
+  <section class="section">
+    <div class="container">
+      <h2>Letters of Recommendation</h2>
+      <p class="lede">References from colleagues and mentors.</p>
+      <div class="letters">
+        {
+          letters.map((letter) => (
+            <div class="letter">
+              <h3 class="letter__title">
+                {letter.title} — {letter.from}
+              </h3>
+              <PdfEmbed
+                src={letter.href}
+                title={`${letter.title} — ${letter.from}`}
+                ratio="page"
+                downloadLabel="Download (PDF)"
+              />
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
 </Layout>
 
 <style>
-  .exp {
-    list-style: none;
-    padding: 0;
-    margin: 2rem 0 0;
-    display: grid;
-    gap: 1.25rem;
-    max-width: 760px;
-  }
-  .exp__item {
-    background: #fff;
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 1.25rem 1.5rem;
-  }
-  .exp__head {
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-    align-items: baseline;
-  }
-  .exp__role {
-    font-weight: 600;
-    font-size: 1.1rem;
-    color: var(--navy);
-  }
-  .exp__dates {
-    color: var(--accent);
-    font-weight: 600;
-    font-size: 0.9rem;
-  }
-  .exp__org {
-    margin: 0.15rem 0 0.5rem;
-    color: var(--accent-strong);
-    font-weight: 500;
-  }
-  .exp__note {
-    margin: 0;
-    color: var(--text-muted);
-  }
   .about__links {
     margin-top: 2rem;
   }
   .about__resume {
     margin-top: 2rem;
+  }
+  .letters {
+    margin: 2rem 0 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 2.5rem;
+    align-items: start;
+  }
+  .letter__title {
+    margin: 0 0 1rem;
+    font-size: 1.2rem;
+    color: var(--navy);
   }
 </style>

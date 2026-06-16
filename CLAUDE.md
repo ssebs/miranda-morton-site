@@ -23,23 +23,25 @@ There is no test runner and no linter configured. `npm run build` is the verific
 Key schema fields and their behavior:
 - `category: "professional" | "academic"` — drives the split columns on the home page.
 - `order` — manual sort within a category.
-- `confidential: true` — hides the full-docs link and shows a client-confidentiality note instead (used for JLA client work). Mutually exclusive in effect with `fullDocsPdf`.
-- `coverImage` / `gallery` / `fullDocsPdf` — **string paths into `/public`** (e.g. `/img/projects/foo.svg`, `/pdfs/foo.pdf`), rendered with plain `<img>`/`<iframe>`. This is a deliberate choice over `astro:assets` optimization so the non-technical owner can swap files in `public/` without touching imports. Trade-off: no automatic image optimization.
+- `confidential: true` — hides the full-docs embed and shows a client-confidentiality note instead. Mutually exclusive in effect with `fullDocsPdf`. No project currently sets this — the JLA projects (The Hangar, Ravenfield) are published in full.
+- `coverImage` / `gallery` — image paths **relative to the markdown file** into `src/assets` (e.g. `../../assets/projects/foo.png`), run through the `image()` helper so `astro:assets` optimizes and scales them to responsive WebP at build. To swap an image, replace the file in `src/assets/projects/` and update the path field.
+- `fullDocsPdf` — string path to a PDF under `/public` (e.g. `/pdfs/foo.pdf`), embedded inline on the project page via `PdfEmbed` (with open/download buttons).
 
 **Single source for project cards.** `ProjectCard.astro` is the one card; `ProjectGrid.astro` renders sets of them and takes `split` (labelled Professional/Academic columns) and `limit` (cap per category). The home page uses `split limit={2}`; `/projects` shows everything.
 
-**Pages** (`src/pages/`): `index.astro` (hero + work grid + about teaser + contact), `portfolio.astro` (embedded portfolio PDF), `projects/index.astro` + `projects/[slug].astro`, `about.astro` (bio + experience array + resume PDF), `contact.astro`. All wrap `src/layouts/Layout.astro`, which provides `<head>`, `Nav`, `Footer`, and imports global styles.
+**Pages** (`src/pages/`): `index.astro` (hero + work grid + about teaser + contact), `portfolio.astro` (embedded portfolio PDF), `projects/index.astro` + `projects/[slug].astro`, `about.astro` (bio + embedded resume + embedded letters of recommendation), `contact.astro`. All wrap `src/layouts/Layout.astro`, which provides `<head>`, `Nav`, `Footer`, and imports global styles.
 
 **Contact form** (`ContactForm.astro`) posts to **FormSubmit.co** — no backend. It mirrors the field/hidden-input structure of ssebs.com/contact (`name`, `email`, `_subject`, `message`, hidden `_captcha` and `_next`). The owner email `mirandamorton7@yahoo.com` is the FormSubmit target and also appears in `Footer.astro` and `contact.astro`. The success banner is revealed client-side from a `?sent=1` query param (the static page can't read it at build time).
 
 **Styling.** `src/styles/global.css` holds the design tokens as CSS custom properties — the palette is the coolors set `dabfff / 907ad6 / 4f518c / 2c2a4a / 7fdeff` mapped to semantic tokens (`--accent`, `--navy`, etc.) plus shared `.btn`, `.container`, `.section`, `.eyebrow` utilities. Everything else is component-scoped `<style>` blocks. Fonts: Cormorant Garamond (headings) + Inter (body), loaded from Google Fonts in `Layout.astro`.
 
-## Placeholders / pending real content
+## Content status
 
-The site is scaffolded with placeholders to be swapped later, without code changes:
-- **Images**: SVG placeholders in `public/img/`. Replace files (or update the path fields in the `.md`).
-- **PDFs**: intentionally absent — portfolio/resume/full-docs links are broken until real PDFs are added to `public/pdfs/` (filenames `miranda-morton-portfolio.pdf`, `miranda-morton-resume.pdf`, and per-project files referenced by `fullDocsPdf`).
-- **Copy**: the JLA project markdown and the About bio still contain owner-supplied text that may be revised.
+Real content has been imported:
+- **Images**: owner photos in `src/assets/` (`miranda-headshot.jpg` for the hero, `miranda-2.jpeg` for the home about-teaser, `miranda-3.jpg` for the About page); project imagery in `src/assets/projects/`. The Detail Studies cover (`detail-studies-cover.png`) was rasterized from the first page of its PDF, since that project has no rendering.
+- **PDFs** (in `public/pdfs/`): `miranda-morton-portfolio.pdf`, `miranda-morton-resume.pdf`, per-project docs referenced by `fullDocsPdf`, and the two recommendation letters (`letter-jansson.pdf`, `reference-eibes.pdf`) embedded on the About page.
+
+To swap any asset, replace the file (and for images, update the path field in the project `.md`).
 
 Before deploy, update `site` in `astro.config.mjs` to the real production domain (used for the contact form's `_next` redirect URL).
 
