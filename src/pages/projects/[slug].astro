@@ -22,16 +22,17 @@ const { Content } = await render(project);
 <Layout title={`${title} — Miranda Morton`} description={summary}>
   <article class="project">
     <header class="project__hero">
-      <div class="container">
-        <a href={withBase("/projects")} class="project__back">← All projects</a>
-        <h1>{title}</h1>
-        <p class="lede">{summary}</p>
+      <div class="container project__hero-inner">
+        <div class="project__hero-text">
+          <a href={withBase("/projects")} class="project__back">← All projects</a>
+          <h1>{title}</h1>
+          <p class="lede">{summary}</p>
+        </div>
+        <div class="project__hero-media">
+          <Image src={coverImage} alt={title} />
+        </div>
       </div>
     </header>
-
-    <div class="project__cover container">
-      <Image src={coverImage} alt={title} />
-    </div>
 
     <div class="container project__body">
       {
@@ -92,17 +93,21 @@ const { Content } = await render(project);
     border-bottom: 1px solid var(--border);
     padding-block: clamp(2rem, 6vw, 4rem);
   }
+  .project__hero-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(2rem, 5vw, 4rem);
+    align-items: center;
+  }
   .project__back {
     display: inline-block;
     margin-bottom: 1rem;
     font-weight: 600;
     font-size: 0.92rem;
   }
-  .project__cover {
-    margin-top: 2.5rem;
-  }
-  .project__cover img {
+  .project__hero-media img {
     width: 100%;
+    height: auto;
     border-radius: var(--radius);
     box-shadow: var(--shadow);
     aspect-ratio: 16 / 9;
@@ -167,6 +172,9 @@ const { Content } = await render(project);
     max-width: 70ch;
   }
   @media (max-width: 820px) {
+    .project__hero-inner {
+      grid-template-columns: 1fr;
+    }
     .project__body {
       grid-template-columns: 1fr;
     }
