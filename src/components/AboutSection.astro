@@ -62,6 +62,16 @@ const {
     gap: clamp(2rem, 5vw, 3.5rem);
     align-items: center;
   }
+  /* About page: text on the left (following her gaze), photo on the right. */
+  .about--full {
+    grid-template-columns: 1.2fr 0.8fr;
+  }
+  .about--full .about__text {
+    order: 1;
+  }
+  .about--full .about__media {
+    order: 2;
+  }
   .about__media img {
     width: 100%;
     height: auto;

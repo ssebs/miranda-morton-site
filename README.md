@@ -6,7 +6,6 @@ https://coolors.co/palette/dabfff-907ad6-4f518c-2c2a4a-7fdeff
 
 ## TODO
 - improve styling
-- move text to left on about page, following where shes looking
 - verify ALL text, esp. project page + hero
 
 
