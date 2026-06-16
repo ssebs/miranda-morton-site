@@ -1,12 +1,6 @@
 ---
 import { withBase } from "../lib/withBase";
-const links = [
-  { href: "/", label: "Home" },
-  { href: "/portfolio", label: "Portfolio" },
-  { href: "/projects", label: "Projects" },
-  { href: "/about", label: "About" },
-  { href: "/contact", label: "Contact" },
-];
+import { NAV_LINKS as links } from "../lib/site";
 const strip = (p: string) => p.replace(/\/$/, "") || "/";
 const path = strip(Astro.url.pathname);
 ---

@@ -1,7 +1,7 @@
 ---
 import { Icon } from "astro-icon/components";
 import { withBase } from "../lib/withBase";
-import { EMAIL, LINKEDIN } from "../lib/site";
+import { EMAIL, LINKEDIN, NAV_LINKS } from "../lib/site";
 const year = new Date().getFullYear();
 ---
 
@@ -11,15 +11,17 @@ const year = new Date().getFullYear();
       <p class="site-footer__name">Miranda Morton</p>
       <p class="site-footer__tag">Architectural Designer &amp; Drafter</p>
     </div>
-    <nav class="site-footer__links">
-      <a href={`mailto:${EMAIL}`}><Icon name="lucide:mail" />Email</a>
-      <a href={LINKEDIN} target="_blank" rel="noopener"
-        ><Icon name="simple-icons:linkedin" />LinkedIn</a
-      >
-      <a href={withBase("/contact")}
-        >Contact<Icon name="lucide:arrow-right" class="footer-arrow" /></a
-      >
+    <nav class="site-footer__nav">
+      {NAV_LINKS.map((l) => <a href={withBase(l.href)}>{l.label}</a>)}
     </nav>
+    <div class="site-footer__social">
+      <a href={`mailto:${EMAIL}`} aria-label="Email">
+        <Icon name="lucide:mail" />
+      </a>
+      <a href={LINKEDIN} target="_blank" rel="noopener" aria-label="LinkedIn">
+        <Icon name="simple-icons:linkedin" />
+      </a>
+    </div>
   </div>
   <p class="site-footer__copy">© {year} Miranda Morton. All rights reserved.</p>
 </footer>
@@ -49,30 +51,36 @@ const year = new Date().getFullYear();
     font-size: 0.9rem;
     color: var(--lavender);
   }
-  .site-footer__links {
+  .site-footer__nav {
     display: flex;
+    flex-wrap: wrap;
     gap: 1.5rem;
   }
-  .site-footer__links a {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.4rem;
+  .site-footer__nav a {
     color: var(--lavender);
     font-weight: 500;
   }
-  .site-footer__links a:hover {
+  .site-footer__nav a:hover {
     color: var(--cyan);
   }
-  .site-footer__links svg {
-    width: 1.05em;
-    height: 1.05em;
+  .site-footer__social {
+    display: flex;
+    gap: 1rem;
+  }
+  .site-footer__social a {
+    display: inline-flex;
+    color: var(--lavender);
+  }
+  .site-footer__social a:hover {
+    color: var(--cyan);
+  }
+  .site-footer__social svg {
+    width: 1.35rem;
+    height: 1.35rem;
     transition: transform 0.2s ease;
   }
-  .site-footer__links a:hover svg {
-    transform: scale(1.12);
-  }
-  .site-footer__links a:hover .footer-arrow {
-    transform: translateX(3px);
+  .site-footer__social a:hover svg {
+    transform: scale(1.15);
   }
   .site-footer__copy {
     text-align: center;
