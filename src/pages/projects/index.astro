@@ -13,8 +13,9 @@ const projects = await getCollection("projects");
       <h1>Full project list</h1>
       <p class="lede">
         Every project, with a short summary and key insights. Open any one for
-        the full write-up and documentation. Some professional work is shown
-        without full documentation out of respect for client confidentiality.
+        full documentation and explanation. Note that professional projects are
+        shown with select work samples only - full documentation is not
+        available out of respect for firm and client confidentiality.
       </p>
       <div class="projects__grid">
         <ProjectGrid projects={projects} split={false} />
