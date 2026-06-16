@@ -1,0 +1,255 @@
+---
+/**
+ * Reusable image lightbox. Any element on the page carrying the
+ * `data-lightbox-trigger` attribute and containing an <img> becomes a trigger;
+ * triggers are collected in DOM order and browsed with prev/next + dots.
+ * Render this component once per page.
+ */
+interface Props {
+  label?: string;
+}
+const { label = "Image viewer" } = Astro.props;
+---
+
+<div
+  class="lightbox"
+  id="lightbox"
+  role="dialog"
+  aria-modal="true"
+  aria-label={label}
+  hidden
+>
+  <button class="lightbox__close" type="button" aria-label="Close">×</button>
+  <button
+    class="lightbox__nav lightbox__nav--prev"
+    type="button"
+    aria-label="Previous image"
+  >
+    ‹
+  </button>
+  <figure class="lightbox__stage">
+    <img class="lightbox__img" src="" alt="" />
+  </figure>
+  <button
+    class="lightbox__nav lightbox__nav--next"
+    type="button"
+    aria-label="Next image"
+  >
+    ›
+  </button>
+  <div class="lightbox__dots" role="tablist" aria-label="Image navigation"></div>
+</div>
+
+<style>
+  .lightbox[hidden] {
+    display: none;
+  }
+  .lightbox {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    grid-template-rows: 1fr auto;
+    align-items: center;
+    gap: clamp(0.5rem, 2vw, 1.5rem);
+    padding: clamp(1rem, 4vw, 2.5rem);
+    background: rgba(20, 19, 36, 0.82);
+    backdrop-filter: blur(6px);
+    animation: lb-fade 0.25s ease;
+  }
+  .lightbox__stage {
+    grid-column: 2;
+    grid-row: 1;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 0;
+  }
+  .lightbox__img {
+    max-width: 100%;
+    max-height: 80vh;
+    width: auto;
+    height: auto;
+    border-radius: var(--radius);
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5);
+    animation: lb-pop 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+  .lightbox__close,
+  .lightbox__nav {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    cursor: pointer;
+    border-radius: 50%;
+    line-height: 1;
+    transition: background 0.18s ease, transform 0.18s ease,
+      border-color 0.18s ease;
+  }
+  .lightbox__close:hover,
+  .lightbox__nav:hover {
+    background: var(--accent);
+    border-color: var(--accent);
+    transform: scale(1.08);
+  }
+  .lightbox__close:focus-visible,
+  .lightbox__nav:focus-visible,
+  .lightbox__dot:focus-visible {
+    outline: 2px solid var(--highlight);
+    outline-offset: 2px;
+  }
+  .lightbox__close {
+    grid-column: 3;
+    grid-row: 1;
+    align-self: start;
+    width: 44px;
+    height: 44px;
+    font-size: 1.8rem;
+  }
+  .lightbox__nav {
+    width: 52px;
+    height: 52px;
+    font-size: 2rem;
+    grid-row: 1;
+  }
+  .lightbox__nav[hidden] {
+    display: none;
+  }
+  .lightbox__nav--prev {
+    grid-column: 1;
+  }
+  .lightbox__nav--next {
+    grid-column: 3;
+    align-self: center;
+  }
+  .lightbox__dots {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    display: flex;
+    justify-content: center;
+    gap: 0.6rem;
+    padding-top: 0.5rem;
+  }
+  .lightbox__dots[hidden] {
+    display: none;
+  }
+  .lightbox__dot {
+    width: 11px;
+    height: 11px;
+    padding: 0;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    background: transparent;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.2s ease;
+  }
+  .lightbox__dot[aria-selected="true"] {
+    background: var(--highlight);
+    border-color: var(--highlight);
+    transform: scale(1.25);
+  }
+  @keyframes lb-fade {
+    from {
+      opacity: 0;
+    }
+  }
+  @keyframes lb-pop {
+    from {
+      opacity: 0;
+      transform: scale(0.97);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .lightbox,
+    .lightbox__img {
+      animation: none;
+    }
+  }
+</style>
+
+<script>
+  const lightbox = document.getElementById("lightbox");
+  if (lightbox) {
+    const triggers = Array.from(
+      document.querySelectorAll<HTMLElement>("[data-lightbox-trigger]")
+    );
+    const slides = triggers.map((t) => {
+      const img = t.querySelector("img");
+      return { src: img?.currentSrc || img?.src || "", alt: img?.alt || "" };
+    });
+
+    const stageImg =
+      lightbox.querySelector<HTMLImageElement>(".lightbox__img")!;
+    const dotsWrap = lightbox.querySelector<HTMLElement>(".lightbox__dots")!;
+    const btnClose =
+      lightbox.querySelector<HTMLButtonElement>(".lightbox__close")!;
+    const btnPrev =
+      lightbox.querySelector<HTMLButtonElement>(".lightbox__nav--prev")!;
+    const btnNext =
+      lightbox.querySelector<HTMLButtonElement>(".lightbox__nav--next")!;
+
+    const single = slides.length < 2;
+    btnPrev.hidden = single;
+    btnNext.hidden = single;
+    dotsWrap.hidden = single;
+
+    let current = 0;
+    let lastFocused: HTMLElement | null = null;
+
+    if (!single) {
+      slides.forEach((_, i) => {
+        const dot = document.createElement("button");
+        dot.type = "button";
+        dot.className = "lightbox__dot";
+        dot.setAttribute("role", "tab");
+        dot.setAttribute("aria-label", `Go to image ${i + 1}`);
+        dot.addEventListener("click", () => show(i));
+        dotsWrap.appendChild(dot);
+      });
+    }
+    const dots = Array.from(dotsWrap.children) as HTMLElement[];
+
+    function show(i: number) {
+      current = (i + slides.length) % slides.length;
+      stageImg.src = slides[current].src;
+      stageImg.alt = slides[current].alt;
+      dots.forEach((d, di) =>
+        d.setAttribute("aria-selected", di === current ? "true" : "false")
+      );
+    }
+
+    function openAt(i: number) {
+      lastFocused = document.activeElement as HTMLElement | null;
+      show(i);
+      lightbox!.hidden = false;
+      document.body.style.overflow = "hidden";
+      btnClose.focus();
+      document.addEventListener("keydown", onKey);
+    }
+
+    function close() {
+      lightbox!.hidden = true;
+      document.body.style.overflow = "";
+      document.removeEventListener("keydown", onKey);
+      lastFocused?.focus();
+    }
+
+    function onKey(e: KeyboardEvent) {
+      if (e.key === "Escape") close();
+      else if (e.key === "ArrowLeft" && !single) show(current - 1);
+      else if (e.key === "ArrowRight" && !single) show(current + 1);
+    }
+
+    triggers.forEach((t, i) => t.addEventListener("click", () => openAt(i)));
+    btnClose.addEventListener("click", close);
+    btnPrev.addEventListener("click", () => show(current - 1));
+    btnNext.addEventListener("click", () => show(current + 1));
+    lightbox.addEventListener("click", (e) => {
+      if (e.target === lightbox) close();
+    });
+  }
+</script>

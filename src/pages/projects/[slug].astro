@@ -3,6 +3,7 @@ import { getCollection, render } from "astro:content";
 import Layout from "../../layouts/Layout.astro";
 import { Image } from "astro:assets";
 import PdfEmbed from "../../components/PdfEmbed.astro";
+import Lightbox from "../../components/Lightbox.astro";
 import { withBase } from "../../lib/withBase";
 
 export async function getStaticPaths() {
@@ -28,9 +29,14 @@ const { Content } = await render(project);
           <h1>{title}</h1>
           <p class="lede">{summary}</p>
         </div>
-        <div class="project__hero-media">
+        <button
+          type="button"
+          class="project__hero-media"
+          data-lightbox-trigger
+          aria-label={`View ${title} cover image`}
+        >
           <Image src={coverImage} alt={title} />
-        </div>
+        </button>
       </div>
     </header>
 
@@ -38,7 +44,7 @@ const { Content } = await render(project);
       {
         keyInsights.length > 0 && (
           <aside class="project__insights">
-            <h2>Key insights</h2>
+            <h2>Role & contributions</h2>
             <ul>
               {keyInsights.map((insight) => (
                 <li>{insight}</li>
@@ -56,8 +62,15 @@ const { Content } = await render(project);
     {
       gallery.length > 0 && (
         <div class="container project__gallery">
-          {gallery.map((src) => (
-            <Image src={src} alt={`${title} — gallery image`} loading="lazy" />
+          {gallery.map((src, i) => (
+            <button
+              type="button"
+              class="project__gallery-item"
+              data-lightbox-trigger
+              aria-label={`View gallery image ${i + 1} of ${gallery.length}`}
+            >
+              <Image src={src} alt={`${title} — gallery image ${i + 1}`} loading="lazy" />
+            </button>
           ))}
         </div>
       )
@@ -84,6 +97,8 @@ const { Content } = await render(project);
         ) : null
       }
     </div>
+
+    <Lightbox label={`${title} images`} />
   </article>
 </Layout>
 
@@ -104,6 +119,23 @@ const { Content } = await render(project);
     margin-bottom: 1rem;
     font-weight: 600;
     font-size: 0.92rem;
+  }
+  .project__hero-media {
+    display: block;
+    width: 100%;
+    padding: 0;
+    border: 0;
+    background: none;
+    cursor: zoom-in;
+    border-radius: var(--radius);
+    transition: transform 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+  .project__hero-media:hover {
+    transform: translateY(-3px);
+  }
+  .project__hero-media:focus-visible {
+    outline: 2px solid var(--accent-strong);
+    outline-offset: 3px;
   }
   .project__hero-media img {
     width: 100%;
@@ -153,13 +185,60 @@ const { Content } = await render(project);
     gap: var(--gap);
     margin-bottom: clamp(2.5rem, 6vw, 4rem);
   }
-  .project__gallery img {
+  .project__gallery-item {
+    position: relative;
+    display: block;
     width: 100%;
-    border-radius: var(--radius);
+    max-width: 560px;
+    margin-inline: auto;
     aspect-ratio: 4 / 3;
-    max-height: 70vh;
-    object-fit: cover;
+    padding: 0.75rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--bg-alt);
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    cursor: zoom-in;
+    font: inherit;
+    color: inherit;
+    transition: transform 0.2s cubic-bezier(0.2, 0.8, 0.2, 1),
+      box-shadow 0.2s ease;
   }
+  .project__gallery-item:focus-visible {
+    outline: 2px solid var(--accent-strong);
+    outline-offset: 3px;
+  }
+  .project__gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+  .project__gallery-item:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 16px 36px rgba(44, 42, 74, 0.16);
+  }
+  .project__gallery-item:hover img {
+    transform: scale(1.04);
+  }
+  /* corner accent echoing the hero frame */
+  .project__gallery-item::after {
+    content: "";
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    width: 26px;
+    height: 26px;
+    border-top: 2px solid var(--purple);
+    border-right: 2px solid var(--purple);
+    border-top-right-radius: 4px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  .project__gallery-item:hover::after {
+    opacity: 0.7;
+  }
+
   .project__docs {
     margin-bottom: clamp(3rem, 8vw, 5rem);
   }
@@ -183,3 +262,4 @@ const { Content } = await render(project);
     }
   }
 </style>
+
