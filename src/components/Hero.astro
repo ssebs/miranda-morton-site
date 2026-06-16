@@ -1,5 +1,6 @@
 ---
 import { Image } from "astro:assets";
+import { Icon } from "astro-icon/components";
 import { withBase } from "../lib/withBase";
 import { LINKEDIN } from "../lib/site";
 import portrait from "../assets/miranda-headshot.jpg";
@@ -18,10 +19,14 @@ import portrait from "../assets/miranda-headshot.jpg";
         Master of Architecture graduate with professional experience in multifamily housing - from schematic design through construction administration.
       </p>
       <div class="hero__ctas">
-        <a href={withBase("/portfolio")} class="btn btn--primary">View Portfolio</a>
-        <a href={withBase("/about")} class="btn btn--ghost">About &amp; Resume</a>
+        <a href={withBase("/portfolio")} class="btn btn--primary"
+          >View Portfolio<Icon name="lucide:arrow-right" class="cta-arrow" /></a
+        >
+        <a href={withBase("/about")} class="btn btn--ghost"
+          >About &amp; Resume<Icon name="lucide:arrow-right" class="cta-arrow" /></a
+        >
         <a href={LINKEDIN} target="_blank" rel="noopener" class="btn btn--ghost">
-          LinkedIn
+          <Icon name="simple-icons:linkedin" />LinkedIn
         </a>
       </div>
     </div>

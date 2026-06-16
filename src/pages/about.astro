@@ -2,6 +2,7 @@
 import Layout from "../layouts/Layout.astro";
 import AboutSection from "../components/AboutSection.astro";
 import PdfEmbed from "../components/PdfEmbed.astro";
+import { Icon } from "astro-icon/components";
 import aboutPhoto from "../assets/miranda-3.jpg";
 import { LINKEDIN } from "../lib/site";
 
@@ -29,7 +30,7 @@ const letters = [
       <AboutSection variant="full" image={aboutPhoto} showResumeCta={false} />
       <p class="about__links">
         <a href={LINKEDIN} target="_blank" rel="noopener" class="btn btn--ghost">
-          View LinkedIn →
+          <Icon name="simple-icons:linkedin" />View LinkedIn
         </a>
       </p>
     </div>

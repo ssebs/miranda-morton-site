@@ -144,6 +144,17 @@ img {
 .btn:active {
   transform: translateY(0) scale(0.98);
 }
+/* Icons inside buttons inherit color + size to the label */
+.btn svg {
+  width: 1.05em;
+  height: 1.05em;
+  flex-shrink: 0;
+  transition: transform 0.2s ease;
+}
+/* Trailing "go" arrow slides on hover */
+.btn:hover .cta-arrow {
+  transform: translateX(4px);
+}
 
 .btn--primary {
   background: linear-gradient(135deg, var(--purple), var(--indigo));

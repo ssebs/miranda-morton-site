@@ -1,4 +1,5 @@
 ---
+import { Icon } from "astro-icon/components";
 import { withBase } from "../lib/withBase";
 interface Props {
   src: string;
@@ -23,9 +24,11 @@ const src = withBase(rawSrc);
   </div>
   <div class="pdf__actions">
     <a href={src} target="_blank" rel="noopener" class="btn btn--ghost">
-      Open in new tab
+      <Icon name="lucide:external-link" />Open in new tab
     </a>
-    <a href={src} download class="btn btn--primary">{downloadLabel}</a>
+    <a href={src} download class="btn btn--primary">
+      <Icon name="lucide:download" class="pdf__dl-icon" />{downloadLabel}
+    </a>
   </div>
 </div>
 
@@ -57,5 +60,21 @@ const src = withBase(rawSrc);
     justify-content: center;
     margin-top: 1.25rem;
     flex-wrap: wrap;
+  }
+  .pdf__actions .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+  }
+  .pdf__actions svg {
+    width: 1.05em;
+    height: 1.05em;
+    transition: transform 0.2s ease;
+  }
+  .pdf__actions .btn:hover svg {
+    transform: scale(1.12);
+  }
+  .pdf__actions .btn:hover .pdf__dl-icon {
+    transform: translateY(2px);
   }
 </style>

@@ -1,5 +1,6 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
+import icon from 'astro-icon';
 
 // https://astro.build/config
 // Served from the GitHub Pages project subpath: ssebs.github.io/miranda-morton-site/
@@ -12,4 +13,5 @@ const base = process.argv.includes('dev') ? '/' : '/miranda-morton-site';
 export default defineConfig({
   site: 'https://ssebs.github.io',
   base,
+  integrations: [icon()],
 });

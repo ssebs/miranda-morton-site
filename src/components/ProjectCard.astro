@@ -1,6 +1,7 @@
 ---
 import type { CollectionEntry } from "astro:content";
 import { Image } from "astro:assets";
+import { Icon } from "astro-icon/components";
 import { withBase } from "../lib/withBase";
 
 interface Props {
@@ -20,7 +21,9 @@ const href = withBase(`/projects/${project.id}`);
     <p class="card__cat">{category}</p>
     <h3 class="card__title">{title}</h3>
     <p class="card__summary">{summary}</p>
-    <span class="card__link">View project <span class="card__arrow">→</span></span>
+    <span class="card__link"
+      >View project <Icon name="lucide:arrow-right" class="card__arrow" /></span
+    >
   </div>
 </a>
 
@@ -93,12 +96,16 @@ const href = withBase(`/projects/${project.id}`);
   .card__link {
     margin-top: auto;
     padding-top: 0.6rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
     color: var(--accent-strong);
     font-weight: 600;
     font-size: 0.92rem;
   }
   .card__arrow {
-    display: inline-block;
+    width: 1.05em;
+    height: 1.05em;
     transition: transform 0.25s ease;
   }
   .card:hover .card__arrow {

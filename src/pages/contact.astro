@@ -1,6 +1,7 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import ContactForm from "../components/ContactForm.astro";
+import { Icon } from "astro-icon/components";
 import { EMAIL, LINKEDIN } from "../lib/site";
 ---
 
@@ -29,10 +30,14 @@ import { EMAIL, LINKEDIN } from "../lib/site";
         <aside class="contact__direct">
           <h3>Direct</h3>
           <p>
-            <a href={`mailto:${EMAIL}`}>{EMAIL} →</a>
+            <a href={`mailto:${EMAIL}`} class="contact__link"
+              ><Icon name="lucide:mail" />{EMAIL}</a
+            >
           </p>
           <p>
-            <a href={LINKEDIN} target="_blank" rel="noopener">LinkedIn →</a>
+            <a href={LINKEDIN} target="_blank" rel="noopener" class="contact__link"
+              ><Icon name="simple-icons:linkedin" />LinkedIn</a
+            >
           </p>
         </aside>
       </div>
@@ -64,6 +69,19 @@ import { EMAIL, LINKEDIN } from "../lib/site";
   }
   .contact__direct h3 {
     margin-top: 0;
+  }
+  .contact__link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+  }
+  .contact__link svg {
+    width: 1.05em;
+    height: 1.05em;
+    transition: transform 0.2s ease;
+  }
+  .contact__link:hover svg {
+    transform: scale(1.12);
   }
   @media (max-width: 760px) {
     .contact__grid {

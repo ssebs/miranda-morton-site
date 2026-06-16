@@ -1,6 +1,7 @@
 ---
 import { Image } from "astro:assets";
 import type { ImageMetadata } from "astro";
+import { Icon } from "astro-icon/components";
 import { withBase } from "../lib/withBase";
 import aboutImage from "../assets/miranda-about.svg";
 interface Props {
@@ -43,7 +44,7 @@ const {
       showResumeCta && (
         <div class="about__ctas">
           <a href={withBase("/about")} class="btn btn--primary">
-            About &amp; Resume
+            About &amp; Resume<Icon name="lucide:arrow-right" class="cta-arrow" />
           </a>
         </div>
       )

@@ -5,6 +5,7 @@ import Hero from "../components/Hero.astro";
 import ProjectGrid from "../components/ProjectGrid.astro";
 import AboutSection from "../components/AboutSection.astro";
 import ContactForm from "../components/ContactForm.astro";
+import { Icon } from "astro-icon/components";
 import { withBase } from "../lib/withBase";
 import aboutTeaserPhoto from "../assets/miranda-2.jpeg";
 
@@ -25,7 +26,9 @@ const projects = await getCollection("projects");
         <ProjectGrid projects={projects} split={true} limit={2} />
       </div>
       <div class="work__cta">
-        <a href={withBase("/projects")} class="btn btn--primary">View all projects</a>
+        <a href={withBase("/projects")} class="btn btn--primary"
+          >View all projects<Icon name="lucide:arrow-right" class="cta-arrow" /></a
+        >
       </div>
     </div>
   </section>
