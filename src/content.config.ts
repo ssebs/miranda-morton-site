@@ -17,8 +17,6 @@ const projects = defineCollection({
       gallery: z.array(image()).default([]),
       // PDF path under /public (e.g. "/pdfs/foo.pdf"). Optional.
       fullDocsPdf: z.string().optional(),
-      // True for client work that can't be published in full (e.g. JLA).
-      confidential: z.boolean().default(false),
     }),
 });
 

@@ -3,9 +3,9 @@ import Layout from "../layouts/Layout.astro";
 import AboutSection from "../components/AboutSection.astro";
 import PdfEmbed from "../components/PdfEmbed.astro";
 import aboutPhoto from "../assets/miranda-3.jpg";
+import { LINKEDIN } from "../lib/site";
 
 const resumePdf = "/pdfs/miranda-morton-resume.pdf";
-const linkedin = "https://www.linkedin.com/in/miranda-morton-34b00230a/";
 
 const letters = [
   {
@@ -21,14 +21,14 @@ const letters = [
 ];
 ---
 
-<Layout title="About — Miranda Morton">
+<Layout title="About - Miranda Morton">
   <section class="section">
     <div class="container">
       <p class="eyebrow">About</p>
       <h1>About Me</h1>
       <AboutSection variant="full" image={aboutPhoto} showResumeCta={false} />
       <p class="about__links">
-        <a href={linkedin} target="_blank" rel="noopener" class="btn btn--ghost">
+        <a href={LINKEDIN} target="_blank" rel="noopener" class="btn btn--ghost">
           View LinkedIn →
         </a>
       </p>

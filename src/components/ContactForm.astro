@@ -1,8 +1,8 @@
 ---
 import { withBase } from "../lib/withBase";
+import { EMAIL } from "../lib/site";
 // Recreated from ssebs.com/contact — uses FormSubmit.co (no backend needed).
-const email = "mirandamorton7@yahoo.com";
-const action = `https://formsubmit.co/${email}`;
+const action = `https://formsubmit.co/${EMAIL}`;
 // Where FormSubmit redirects after a successful submit.
 const nextUrl = new URL(withBase("/contact?sent=1"), Astro.site ?? "https://ssebs.github.io").href;
 ---

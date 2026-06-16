@@ -1,37 +1,8 @@
 ---
 import { Image } from "astro:assets";
-import type { ImageMetadata } from "astro";
 import { withBase } from "../lib/withBase";
-import portrait from "../assets/miranda-portrait.svg";
-interface Cta {
-  href: string;
-  label: string;
-  style?: "primary" | "ghost";
-  external?: boolean;
-}
-
-interface Props {
-  name?: string;
-  title?: string;
-  image?: ImageMetadata;
-  ctas?: Cta[];
-}
-
-const {
-  name = "Miranda Morton",
-  title = "Architectural Designer",
-  image = portrait,
-  ctas = [
-    { href: "/portfolio", label: "View Portfolio", style: "primary" },
-    { href: "/about", label: "About & Resume", style: "ghost" },
-    {
-      href: "https://www.linkedin.com/in/miranda-morton-34b00230a/",
-      label: "LinkedIn",
-      style: "ghost",
-      external: true,
-    },
-  ],
-} = Astro.props;
+import { LINKEDIN } from "../lib/site";
+import portrait from "../assets/miranda-headshot.jpg";
 ---
 
 <section class="hero">
@@ -41,33 +12,24 @@ const {
   <div class="container hero__inner">
     <div class="hero__text">
       <p class="eyebrow hero__eyebrow">Design · Documentation · Detail</p>
-      <h1 class="hero__name">{name}</h1>
-      <p class="hero__title">{title}</p>
+      <h1 class="hero__name">Miranda Morton</h1>
+      <p class="hero__title">Architectural Designer</p>
       <p class="hero__blurb">
         Master of Architecture graduate with professional experience in multifamily housing - from schematic design through construction administration.
       </p>
       <div class="hero__ctas">
-        {
-          ctas.map((c) => (
-            <a
-              href={c.external ? c.href : withBase(c.href)}
-              class:list={[
-                "btn",
-                c.style === "ghost" ? "btn--ghost" : "btn--primary",
-              ]}
-              {...c.external ? { target: "_blank", rel: "noopener" } : {}}
-            >
-              {c.label}
-            </a>
-          ))
-        }
+        <a href={withBase("/portfolio")} class="btn btn--primary">View Portfolio</a>
+        <a href={withBase("/about")} class="btn btn--ghost">About &amp; Resume</a>
+        <a href={LINKEDIN} target="_blank" rel="noopener" class="btn btn--ghost">
+          LinkedIn
+        </a>
       </div>
     </div>
 
     <div class="hero__media">
       <span class="hero__frame" aria-hidden="true"></span>
       <span class="hero__accent" aria-hidden="true"></span>
-      <Image src={image} alt={`Portrait of ${name}`} width={520} height={640} />
+      <Image src={portrait} alt="Portrait of Miranda Morton" width={520} height={640} />
     </div>
   </div>
 </section>

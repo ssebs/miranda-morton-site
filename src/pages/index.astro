@@ -6,14 +6,13 @@ import ProjectGrid from "../components/ProjectGrid.astro";
 import AboutSection from "../components/AboutSection.astro";
 import ContactForm from "../components/ContactForm.astro";
 import { withBase } from "../lib/withBase";
-import heroPhoto from "../assets/miranda-headshot.jpg";
 import aboutTeaserPhoto from "../assets/miranda-2.jpeg";
 
 const projects = await getCollection("projects");
 ---
 
 <Layout>
-  <Hero image={heroPhoto} />
+  <Hero />
 
   <section class="section" id="work">
     <div class="container">

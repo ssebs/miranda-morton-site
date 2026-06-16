@@ -5,8 +5,8 @@
 https://coolors.co/palette/dabfff-907ad6-4f518c-2c2a4a-7fdeff
 
 ## TODO
-- improve styling
-- verify ALL text, esp. project page + hero
+- Add icons
+- Improve styling
 
 
 ## Structure:

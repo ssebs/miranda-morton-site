@@ -1,12 +1,10 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import ContactForm from "../components/ContactForm.astro";
-
-const email = "mirandamorton7@yahoo.com";
-const linkedin = "https://www.linkedin.com/in/miranda-morton-34b00230a/";
+import { EMAIL, LINKEDIN } from "../lib/site";
 ---
 
-<Layout title="Contact — Miranda Morton">
+<Layout title="Contact - Miranda Morton">
   <section class="section">
     <div class="container contact">
       <p class="eyebrow">Contact</p>
@@ -31,10 +29,10 @@ const linkedin = "https://www.linkedin.com/in/miranda-morton-34b00230a/";
         <aside class="contact__direct">
           <h3>Direct</h3>
           <p>
-            <a href={`mailto:${email}`}>{email}</a>
+            <a href={`mailto:${EMAIL}`}>{EMAIL} →</a>
           </p>
           <p>
-            <a href={linkedin} target="_blank" rel="noopener">LinkedIn →</a>
+            <a href={LINKEDIN} target="_blank" rel="noopener">LinkedIn →</a>
           </p>
         </aside>
       </div>
